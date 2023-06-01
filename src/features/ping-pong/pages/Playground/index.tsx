@@ -39,22 +39,22 @@ export const Playground = () => {
         pingPong.unMountEvents();
       };
     }
-  }, []);
+  }, [leftPlayer, navigate, rightPlayer]);
 
   return (
     <div className={styles.page}>
-      <div className={styles.counters}>
-        <div className={styles.score}>
-          <h1>{leftPlayer}</h1>
-          <p>Score:</p>
-          <span>{leftPlayerScore}</span>
-        </div>
-        <div className={styles.score}>
-          <h1>{rightPlayer}</h1>
-          <p>Score:</p>
-          <span>{rightPlayerScore}</span>
-        </div>
-      </div>
+      {/*<div className={styles.counters}>*/}
+      {/*  <div className={styles.score}>*/}
+      {/*    <h1>{leftPlayer}</h1>*/}
+      {/*    <p>Score:</p>*/}
+      {/*    <span>{leftPlayerScore}</span>*/}
+      {/*  </div>*/}
+      {/*  <div className={styles.score}>*/}
+      {/*    <h1>{rightPlayer}</h1>*/}
+      {/*    <p>Score:</p>*/}
+      {/*    <span>{rightPlayerScore}</span>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
       <div className={styles.canvasWrapper} ref={canvasParentRef}>
         <canvas ref={canvasRef} />
       </div>
