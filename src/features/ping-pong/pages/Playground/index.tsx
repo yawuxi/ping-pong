@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PingPong } from "features/ping-pong/PingPong";
 import { usePlayers } from "features/ping-pong/store/usePlayers";
@@ -9,20 +9,18 @@ export const Playground = () => {
   const navigate = useNavigate();
   const [leftPlayerScore, setLeftPlayerScore] = useState(0);
   const [rightPlayerScore, setRightPlayerScore] = useState(0);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const canvasParentRef = useRef<HTMLDivElement>(null);
+  const [canvasRef, setCanvasRef] = useState<HTMLCanvasElement | null>(null);
+  const [canvasParentRef, setCanvasParentRef] = useState<HTMLDivElement | null>(
+    null
+  );
 
   useEffect(() => {
     if (!leftPlayer || !rightPlayer) {
       navigate("/hello");
     }
 
-    if (canvasRef.current && canvasParentRef.current) {
-      const pingPong = new PingPong(
-        canvasRef.current,
-        canvasParentRef.current,
-        20
-      );
+    if (canvasParentRef && canvasRef) {
+      const pingPong = new PingPong(canvasRef, canvasParentRef, 20);
       pingPong.mountEvents();
       pingPong.loop();
       pingPong.onScore = ({ left, right }) => {
@@ -39,7 +37,7 @@ export const Playground = () => {
         pingPong.unMountEvents();
       };
     }
-  }, [leftPlayer, navigate, rightPlayer]);
+  }, [canvasRef, canvasParentRef, leftPlayer, navigate, rightPlayer]);
 
   return (
     <div className={styles.page}>
@@ -55,8 +53,11 @@ export const Playground = () => {
           <span>{rightPlayerScore}</span>
         </div>
       </div>
-      <div className={styles.canvasWrapper} ref={canvasParentRef}>
-        <canvas ref={canvasRef} />
+      <div
+        className={styles.canvasWrapper}
+        ref={(ref) => setCanvasParentRef(ref)}
+      >
+        <canvas ref={(ref) => setCanvasRef(ref)} />
       </div>
     </div>
   );

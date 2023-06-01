@@ -19,6 +19,8 @@ export class PingPong {
     private ballRadius = 20
   ) {
     this.ctx = canvas.getContext("2d")!;
+    this.canvas.width = canvasParent.offsetWidth;
+    this.canvas.height = canvasParent.offsetHeight;
     this.controls = new Controls();
     this.leftPlayer = new Player(
       this.ctx,
@@ -86,11 +88,6 @@ export class PingPong {
     }
   };
 
-  private resize = () => {
-    this.canvas.width = this.canvasParent.offsetWidth;
-    this.canvas.height = this.canvasParent.offsetHeight;
-  };
-
   private drawDividerLine = () => {
     this.ctx.beginPath();
     this.ctx.setLineDash([5, 15]);
@@ -101,14 +98,11 @@ export class PingPong {
   };
 
   mountEvents = () => {
-    this.resize();
-    addEventListener("resize", this.resize);
     this.controls.mountEvents();
   };
 
   unMountEvents = () => {
     clearInterval(this.intervalId);
-    removeEventListener("resize", this.resize);
     this.controls.unMountEvents();
   };
 }
